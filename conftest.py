@@ -1,7 +1,5 @@
 import pytest
-import random
-import string
-
+from helpers import (FieldsAd, AuthCredentials)
 from selenium import webdriver
 # Добавил настройки, чтоб отключить менеджер паролей т.к. 5-й тест падал из-за предупреждения утекшего пароля
 
@@ -17,57 +15,46 @@ def driver():
     options.add_experimental_option("prefs", prefs)
     driver = webdriver.Chrome(options=options)
     driver.maximize_window()
-    return driver
+    yield driver
+    driver.quit()
 
 
 @pytest.fixture(scope='function')
 def random_email():
-    user = ''.join(random.choices(string.ascii_lowercase + string.digits, k=7))
-    domain = ''.join(random.choices(string.ascii_lowercase, k=7))
-    tld = ''.join(random.choices(string.ascii_lowercase, k=3))
-    return f"{user}@{domain}.{tld}"
+    return AuthCredentials.gen_email()
 
 
 @pytest.fixture(scope='function')
 def random_password():
-    password = random.randint(10000000, 99999999)
-    return str(password)
+    return AuthCredentials.gen_password()
 
 
 @pytest.fixture(scope='function')
 def random_invalid_email():
-    email = ''.join(random.choices(
-        string.ascii_lowercase + string.digits, k=7))
-    return email
+    return AuthCredentials.gen_invalid_email()
 
 
 @pytest.fixture(scope='function')
 def existing_password():
-    existing_password = '12345678'
-    return existing_password
+    return AuthCredentials.gen_existing_password()
 
 
 @pytest.fixture(scope='function')
 def existing_email():
-    existing_email = 'user777@gmail.com'
-    return existing_email
+    return AuthCredentials.gen_existing_email()
 
 
 # Создание названия объявления. (Как сделать его рандомным и затем найти с учетом пагинации страниц объявлений — ещё не проходили, приходится так)
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='function')
 def item_name():
-    item_name = 'Тестовое объявление для прогона'
-    return item_name
+    return FieldsAd.gen_item_name()
 
 
 @pytest.fixture(scope='function')
 def random_item_description():
-    random_item_description = ''.join(random.choices(
-        string.ascii_letters + string.digits, k=50))
-    return random_item_description
+    return FieldsAd.gen_item_description()
 
 
 @pytest.fixture(scope='function')
 def random_price():
-    random_price = random.randint(1000000, 9999999)
-    return random_price
+    return FieldsAd.gen_price()
