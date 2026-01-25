@@ -1,15 +1,13 @@
 from selenium.webdriver.common.by import By
 
-class StandTesting:
-    PROD_STAND = "https://qa-desk.stand.praktikum-services.ru/"
-    
+
 class AuthPade:
     # Кнопка "Вход и регистрация"
     LOGIN_AND_REG_BTN = (By.XPATH, "//button[text()='Вход и регистрация']")
     # Кнопка "Нет аккаунта"
     NO_ACCOUNT_BTN = (By.XPATH, "//button[text()='Нет аккаунта']")
     # Инпут "Введите Email"
-    EMAIL_INPUT = (By.NAME, "email")
+    EMAIL_INPUT = (By.XPATH, "//input[@placeholder='Введите Email']")
     # Инпут "Пароль"
     PASSWORD_INPUT = (By.NAME, "password")
     # Инпут "Повторите пароль"
@@ -19,6 +17,7 @@ class AuthPade:
     # Кнопка "Войти"
     ENTER_BTN = (By.XPATH, "//button[text()='Войти']")
 
+
 class Header:
     # Аватар юзера
     USER_AVATAR = (By.XPATH, "//button[contains(@class,'circleSmall')]")
@@ -27,12 +26,14 @@ class Header:
     # Имя профиля
     PROFILE_NAME = (By.XPATH, "//h3[contains(@class,'profileText')]")
 
+
 class HomePage:
     # Домашняя страница
     HOME_PAGE = (By.CSS_SELECTOR, "div.homePage_homepageStyle__WP-Y1")
     # Область с объявлениями
     ADS_PAGE = (By.XPATH, "//div[@class='grid_threeColumns__ldn5D']")
-    
+
+
 class ErrorAuth:
     # Красная обводка у инпута поля email
     INPUT_EMAIL_ERROR = (
@@ -47,11 +48,13 @@ class ErrorAuth:
     ERROR_MESSAGE_EMAIL = (
         By.XPATH, ("//input[@name='email']/parent::div/../../span[contains(text(),'Ошибка')]"))
 
+
 class PostingAd:
     # Кнопка "Разместить объявление"
     POSTING_AD_BTN = (By.XPATH, "//button[text()='Разместить объявление']")
     # Заголовок модалки при попытке размещения объявления неавторизованным юзером
-    HEADER_LOGIN_MODAL_FOR_POSTING_AD = (By.XPATH, "//h1[@class='h1' and contains (text(), 'Чтобы разместить объявление, авторизуйтесь')]")
+    HEADER_LOGIN_MODAL_FOR_POSTING_AD = (
+        By.XPATH, "//h1[@class='h1' and contains (text(), 'Чтобы разместить объявление, авторизуйтесь')]")
     # Инпут "Название" товара
     NAME_ITEM_INPUT = (
         By.XPATH, "//input[@placeholder='Название' and @name='name']")
@@ -59,7 +62,8 @@ class PostingAd:
     DESCRIPTION_ITEM_INPUT = (
         By.XPATH, "//textarea[@placeholder='Описание товара' and @name='description']")
     # Инпут "Стоимость"
-    PRICE_IPUT = (By.XPATH, "//input[@placeholder='Стоимость' and @name='price']")
+    PRICE_IPUT = (
+        By.XPATH, "//input[@placeholder='Стоимость' and @name='price']")
     # Дропдаун "Категории"
     DROPDOWN_CATEGORIES = (
         By.CSS_SELECTOR, 'form > div:nth-child(2) .dropDownMenu_input__itKtw > button')
@@ -77,7 +81,8 @@ class PostingAd:
     POST_BTN = (By.XPATH, "//button[text()='Опубликовать']")
     # Страница с объявлениями
     ADS_PAGE = (By.XPATH, "//div[@class='grid_threeColumns__ldn5D']")
-    
+
+
 class UserProfile:
     # Кнопка "Сохранить изменения" в ЛК
     SAVE_CHANGES_BTN = (By.XPATH, "//button[text()='Сохранить изменения']")

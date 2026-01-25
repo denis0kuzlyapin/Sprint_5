@@ -1,11 +1,14 @@
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
+from constants import PROD_STAND
+from helpers import (AuthCredentials, FieldsAd)
 
-from locators import (UserProfile, HomePage, PostingAd, StandTesting, AuthPade, Header)
+from locators import (UserProfile, HomePage, PostingAd, AuthPade, Header)
 
 
 def test_posting_ad_by_unauthorized_user_getting_modal_for_auth(driver):
-    driver.get(StandTesting.PROD_STAND)
+
+    driver.get(PROD_STAND)
 
     WebDriverWait(driver, 5).until(
         expected_conditions.visibility_of_element_located(HomePage.HOME_PAGE))
@@ -20,8 +23,14 @@ def test_posting_ad_by_unauthorized_user_getting_modal_for_auth(driver):
         *PostingAd.HEADER_LOGIN_MODAL_FOR_POSTING_AD).text == 'Чтобы разместить объявление, авторизуйтесь'
 
 
-def test_posting_ad_by_authorized_user_success(driver, existing_password, existing_email, item_name, random_item_description, random_price):
-    driver.get(StandTesting.PROD_STAND)
+def test_posting_ad_by_authorized_user_success(driver):
+    existing_email = AuthCredentials.gen_existing_email()
+    existing_password = AuthCredentials.gen_existing_password()
+    item_name = FieldsAd.gen_item_name()
+    item_description = FieldsAd.gen_item_description()
+    price = FieldsAd.gen_price()
+
+    driver.get(PROD_STAND)
     # Ожидаем загрузки домашней страницы
     WebDriverWait(driver, 10).until(
         expected_conditions.visibility_of_element_located(HomePage.HOME_PAGE))
@@ -45,8 +54,8 @@ def test_posting_ad_by_authorized_user_success(driver, existing_password, existi
 
     driver.find_element(*PostingAd.NAME_ITEM_INPUT).send_keys(item_name)
     driver.find_element(
-        *PostingAd.DESCRIPTION_ITEM_INPUT).send_keys(random_item_description)
-    driver.find_element(*PostingAd.PRICE_IPUT).send_keys(random_price)
+        *PostingAd.DESCRIPTION_ITEM_INPUT).send_keys(item_description)
+    driver.find_element(*PostingAd.PRICE_IPUT).send_keys(price)
     driver.find_element(*PostingAd.DROPDOWN_CATEGORIES).click()
     driver.find_element(*PostingAd.BOOK_CATEGORY).click()
     driver.find_element(*PostingAd.DROPDOWN_CITIES).click()
